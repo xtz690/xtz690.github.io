@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="GPX Compassの始め方。「ルート」でGPXを辿る方法と、「ナビ」でGoogle Routes APIを使って目的地へ向かう方法を分けて紹介します。">
+  <meta name="theme-color" content="#163b4b">
+  <link rel="canonical" href="https://xtz690.github.io/gpx-compass/">
+  <title>クイックスタートガイド | GPX Compass</title>
+  <style>
+    :root { color-scheme: light; --ink: #183443; --muted: #506674; --line: #d9e3e8; --blue: #185aaa; --green: #176352; --paper: #fff; --bg: #f4f7f9; }
+    * { box-sizing: border-box; }
+    html { scroll-padding-top: 20px; }
+    body { margin: 0; background: var(--bg); color: var(--ink); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans JP", "Yu Gothic", sans-serif; line-height: 1.85; overflow-wrap: anywhere; }
+    a { color: var(--blue); text-underline-offset: .2em; }
+    a:hover { text-decoration-thickness: 2px; }
+    a:focus-visible, summary:focus-visible { outline: 3px solid #b85600; outline-offset: 5px; border-radius: 2px; }
+    .skip { position: absolute; top: -100px; left: 16px; padding: 12px; background: white; z-index: 2; }
+    .skip:focus { top: 8px; }
+    .wrap { width: min(100% - 40px, 960px); margin-inline: auto; }
+    .brand { padding-block: 22px; font-size: .95rem; font-weight: 700; letter-spacing: .04em; }
+    .brand a { color: var(--ink); text-decoration: none; }
+    header { padding: 36px 0 40px; background: #163b4b; color: white; }
+    .eyebrow { margin: 0 0 10px; font-size: .8rem; font-weight: 700; letter-spacing: .14em; color: #b6dce7; }
+    h1 { margin: 0 0 18px; font-size: clamp(1.8rem, 5vw, 2.6rem); line-height: 1.4; letter-spacing: .02em; }
+    header p { max-width: 45em; }
+    .meta { font-size: .8rem; color: #c6dce4; margin-bottom: 0; }
+    main { padding-block: 32px 48px; }
+    h2 { margin: 0 0 16px; font-size: 1.5rem; line-height: 1.5; }
+    h3 { font-size: 1.15rem; line-height: 1.6; margin: 0 0 10px; }
+    p { margin: 0 0 16px; }
+    section { scroll-margin-top: 20px; }
+    .cards { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+    .card { background: var(--paper); padding: 26px; border: 1px solid var(--line); border-top: 5px solid var(--blue); border-radius: 10px; }
+    .card.nav { border-top-color: var(--green); }
+    .tag { display: inline-block; font-size: .85rem; font-weight: 700; color: var(--blue); margin-bottom: 12px; }
+    .nav .tag { color: var(--green); }
+    .card h3 { font-size: 1.4rem; }
+    .card .concept { font-size: 1.05rem; font-weight: 700; }
+    .card dl { margin: 16px 0 20px; }
+    .card dt { font-size: .8rem; color: var(--muted); }
+    .card dd { margin: 0 0 10px; }
+    .card a { font-weight: 700; }
+    .notice { padding: 18px 22px; border-left: 4px solid var(--blue); background: #eaf2fb; margin: 22px 0; border-radius: 0 8px 8px 0; }
+    .notice p:last-child { margin-bottom: 0; }
+    .caution { border-left-color: #9b6700; background: #fff6df; }
+    .toc { margin: 26px 0 32px; padding: 20px 24px; border: 1px solid var(--line); border-radius: 10px; }
+    .toc p { margin-bottom: 8px; font-weight: 700; }
+    .toc ul { display: flex; gap: 10px 24px; flex-wrap: wrap; list-style: none; padding: 0; margin: 0; }
+    .chapter { margin-top: 24px; padding: 30px; background: white; border: 1px solid var(--line); border-radius: 10px; }
+    .section-label { font-size: .8rem; font-weight: 700; color: var(--muted); letter-spacing: .08em; margin-bottom: 8px; }
+    ol, ul { padding-left: 1.5em; }
+    li { margin: 10px 0; }
+    .steps > li { padding-left: 6px; margin-block: 20px; }
+    .steps > li::marker { font-weight: 800; color: var(--blue); }
+    .steps p { margin: 4px 0 0; }
+    .ui { font-weight: 700; }
+    .subtle { color: var(--muted); font-size: .9rem; }
+    details { border-top: 1px solid var(--line); padding: 16px 0; }
+    details:last-child { padding-bottom: 0; }
+    summary { font-weight: 700; cursor: pointer; }
+    details[open] summary { margin-bottom: 14px; }
+    details p:last-child { margin-bottom: 0; }
+    footer { padding: 24px 0 36px; border-top: 1px solid var(--line); font-size: .9rem; color: var(--muted); }
+    footer p:last-child { margin-bottom: 0; }
+    @media (max-width: 640px) {
+      .wrap { width: calc(100% - 32px); }
+      header { padding-block: 28px; }
+      .cards { grid-template-columns: 1fr; }
+      .card, .chapter { padding: 22px 18px; }
+      .toc { padding: 18px; }
+      .toc ul { display: block; }
+      .toc li { margin: 6px 0; }
+      .notice { padding: 16px; }
+    }
+    @media print {
+      body { background: white; font-size: 10pt; }
+      header { background: white; color: black; padding-block: 12px; }
+      .eyebrow, .meta { color: #333; }
+      .wrap { width: 100%; }
+      .skip, .toc { display: none; }
+      .chapter { padding: 18px; }
+      .card, li { break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip" href="#main">本文へ移動</a>
+  <div class="wrap brand"><a href="/">GPX Compass</a></div>
+  <header>
+    <div class="wrap">
+      <p class="eyebrow">ANDROID · QUICK START</p>
+      <h1>走りたい道を、迷わず辿る。</h1>
+      <p>GPX Compass クイックスタートガイド</p>
+      <p>GPX Compassは、あらかじめ用意したGPXルートを辿るためのナビゲーション補助アプリです。もう一つの使い方として、Google Routes APIで任意の目的地への経路を検索し、案内する機能も備えています。</p>
+      <p class="meta">Android版 0.80.2 の日本語画面を基準に説明しています。更新日: 2026年9月25日</p>
+    </div>
+  </header>
+  <main id="main" class="wrap">
+    <section aria-labelledby="two-ways">
+      <h2 id="two-ways">まずは「ルート」と「ナビ」の違い</h2>
+      <p>選ぶ基準は、<strong>「走る道が決まっているか」「行き先だけが決まっているか」</strong>です。</p>
+      <div class="cards">
+        <article class="card">
+          <span class="tag">主な使い方 · 「ルート」メニュー</span>
+          <h3>用意したGPXを辿る</h3>
+          <p class="concept">走りたい道を読み込む → その道を案内</p>
+          <p>ラリーやツーリングなど、決めておいたコースを走りたいときに使います。GPXの線に沿って進捗や曲がる方向を確認します。</p>
+          <dl>
+            <dt>用意するもの</dt><dd>コースのGPXファイル</dd>
+            <dt>自分のRoutes APIキー</dt><dd><strong>不要</strong></dd>
+            <dt>道順を決めるのは</dt><dd>読み込んだGPX</dd>
+          </dl>
+          <a href="#gpx">GPXで走り始める手順へ →</a>
+        </article>
+        <article class="card nav">
+          <span class="tag">もう一つの使い方 · 「ナビ」メニュー</span>
+          <h3>選んだ目的地へ向かう</h3>
+          <p class="concept">行き先を選ぶ → そこまでの道を検索</p>
+          <p>宿泊先や立ち寄り先など、行き先だけが決まっているときに使います。Google Routes APIが検索した道路経路を案内します。</p>
+          <dl>
+            <dt>用意するもの</dt><dd>行き先・インターネット接続</dd>
+            <dt>自分のRoutes APIキー</dt><dd><strong>必要</strong>（初回設定あり）</dd>
+            <dt>道順を決めるのは</dt><dd>Google Routes API（GPXは不要）</dd>
+          </dl>
+          <a href="#navigation">目的地ナビの手順へ →</a>
+        </article>
+      </div>
+      <aside class="notice">
+        <p><strong>GPXを辿るだけなら、APIキーの設定は不要です。</strong><br>Googleの地図を表示するためにも、ご自身のRoutes APIキーは必要ありません。地図を表示する機能と、目的地までの道を検索する機能は別です。</p>
+      </aside>
+    </section>
+    <nav class="toc" aria-label="このページの目次">
+      <p>このガイドの内容</p>
+      <ul>
+        <li><a href="#before">初回の準備</a></li>
+        <li><a href="#gpx">GPXを辿る</a></li>
+        <li><a href="#navigation">目的地へナビ</a></li>
+        <li><a href="#switching">二つの使い分け</a></li>
+        <li><a href="#recording">走行を記録する</a></li>
+        <li><a href="#faq">困ったとき</a></li>
+      </ul>
+    </nav>
+    <section id="before" class="chapter" aria-labelledby="before-title">
+      <p class="section-label">BEFORE YOU RIDE</p>
+      <h2 id="before-title">初回の準備</h2>
+      <ol>
+        <li>端末の位置情報をONにし、アプリから求められたら位置情報の利用を許可します。<strong>正確な位置情報</strong>を有効にしてください。</li>
+        <li>通知の許可を求められたら、案内・記録の動作状態を確認できるよう許可してください。</li>
+        <li>屋外などGPSを受信しやすい場所で、地図上に現在地が表示されることを確かめます。</li>
+        <li>音声を使う場合は、メニューの<span class="ui">「音声案内」</span>で設定し、端末の音量とBluetooth機器への出力を確認します。</li>
+      </ol>
+      <p class="subtle">以下の手順は、地図画面のメニューボタンから始めます。Bluetoothセンサーなどの外部機器は、使い始めるための必須条件ではありません。</p>
+      <aside class="notice caution"><p>設定や目的地選択は、安全な場所に停車して行ってください。案内は補助情報です。実際の標識、通行規制、路面状況を優先してください。</p></aside>
+    </section>
+    <section id="gpx" class="chapter" aria-labelledby="gpx-title">
+      <p class="section-label">01 · 「ルート」メニュー</p>
+      <h2 id="gpx-title">GPXルートを辿る</h2>
+      <p>あらかじめルート作成サービスなどからGPXファイルを入手し、端末から選べる場所に保存しておきます。</p>
+      <ol class="steps">
+        <li><strong>「ルート」→「GPX読込」でファイルを選ぶ</strong><p>読み込み後、ルート全体のプレビューが表示されます。コースと進む向きを確認してください。逆向きに走りたい場合は「ルート」→「ルート反転」を使います。</p></li>
+        <li><strong>出発前にオフライン準備を確認する</strong><p>GPXを読み込むと、ルート周辺の地理院地図などの準備が自動的に始まります。「ルート」→「オフライン準備状況」で進捗を確認できます。圏外へ出る予定なら、通信できる場所で完了を待ってください。</p></li>
+        <li><strong>「GPXルート走行開始」を押す</strong><p>プレビューから開始します。読み込んだGPXが待機中なら、「ルート」メニューの同名の項目からも開始できます。</p></li>
+        <li><strong>地図のGPX線・進捗・ターン案内を確認して走る</strong><p>GPXの道筋を辿る機能であり、目的地への最適経路を検索する機能ではありません。曲がり角の案内だけに頼らず、地図上の線も確認してください。</p></li>
+      </ol>
+      <p>GPXファイルを他のアプリからGPX Compassへ共有して読み込むこともできます。</p>
+      <aside class="notice">
+        <p><strong>「ゴール地点までナビ」は、GPXを辿る開始ボタンではありません。</strong><br>これは現在地からGPXのゴール地点への道路経路を別に検索する機能です。GPXどおりに走るには「GPXルート走行開始」を選びます。</p>
+      </aside>
+      <details>
+        <summary>圏外で使うときの注意</summary>
+        <p>GPX案内にはご自身のAPIキーは不要ですが、地図の取得には通信が必要です。保存済みの地理院地図は圏外でも使えます。「地図」で「地理院標準」を選ぶと表示を確認できます。「自動」では圏外時に地理院地図へ切り替わります。</p>
+        <p>保存されるのは読み込んだルートの周辺であり、全国の地図ではありません。未取得の範囲は表示できません。また、Google地図のオフライン保存機能ではなく、目的地ナビの経路検索もオフラインでは利用できません。</p>
+      </details>
+    </section>
+    <section id="navigation" class="chapter" aria-labelledby="navigation-title">
+      <p class="section-label">02 · 「ナビ」メニュー</p>
+      <h2 id="navigation-title">任意の目的地へナビゲーションする</h2>
+      <p>GPXを読み込まなくても使える、もう一つの機能です。現在地から選んだ目的地までの経路を<strong>Google Routes API</strong>で検索します。インターネット接続と、ご自身で用意したRoutes APIキーが必要です。</p>
+      <details open>
+        <summary>初回だけ：Routes APIキーを設定する</summary>
+        <ol>
+          <li>Google Cloudでプロジェクトと請求先を設定し、Routes APIを有効にしてAPIキーを作成します。手順は<a href="https://developers.google.com/maps/documentation/routes/get-api-key?hl=ja">Google公式のRoutes APIセットアップガイド</a>を参照してください。</li>
+          <li>キーには利用制限を設定してください。APIの制限はRoutes APIを対象とし、Androidアプリの制限に必要なパッケージ名とSHA-1は、次のアプリ内設定画面で確認できます。</li>
+          <li>GPX Compassで<span class="ui">「地図」→「目的地ナビ / Routes API」</span>を開き、「Routes APIキー」に入力して<span class="ui">「保存」</span>を押します。</li>
+          <li>「APIキー: 登録済み」を確認し、同じ画面の「移動モード」で用途に合う「自動車」または「自転車」を選びます。</li>
+        </ol>
+        <p class="subtle">キーの設定場所は「ナビ」ではなく「地図」メニューです。APIキーは他人に共有したり、公開したりしないでください。</p>
+        <p><strong>APIの利用料金が発生する場合があります。</strong>Google側の料金・利用上限を確認してから使ってください。<a href="https://developers.google.com/maps/documentation/routes/usage-and-billing?hl=ja">Routes APIの使用量と課金</a></p>
+      </details>
+      <h3>地図から目的地を選ぶ</h3>
+      <ol class="steps">
+        <li><strong>「ナビ」→「地図から選ぶ」を開く</strong><p>地図を動かし、目的地を画面の照準に合わせます。</p></li>
+        <li><strong>「ここへナビ」を押す</strong><p>経路検索が成功すると、その目的地への案内が始まります。</p></li>
+        <li><strong>終了するときは「ナビ」→「ナビを中止」</strong><p>記録も行っている場合、ナビの中止と走行記録の終了は別の操作です。</p></li>
+      </ol>
+      <p>一度使った行き先は「最近の目的地」から選べます。「お気に入り」も利用できます。</p>
+      <details>
+        <summary>Googleマップで探した場所へ向かう</summary>
+        <p>Googleマップアプリで場所を選び、「共有」の送信先にGPX Compassを選ぶ方法もあります。共有内容を目的地として認識できると、GPX Compassで経路検索が始まります。APIキーを先に設定し、停車中に操作してください。</p>
+        <p>GPX Compassの「ナビ」メニュー自体に、住所や施設名を入力する検索欄はありません。地図上で選ぶか、Googleマップなどから場所を共有してください。</p>
+      </details>
+    </section>
+    <section id="switching" class="chapter" aria-labelledby="switching-title">
+      <p class="section-label">HOW THEY WORK TOGETHER</p>
+      <h2 id="switching-title">GPXと目的地ナビを使い分ける</h2>
+      <h3>例：GPXのスタート地点まで行ってから、コースを走る</h3>
+      <ol class="steps">
+        <li><strong>GPXを読み込む</strong><p>「ルート」→「GPX読込」でコースを用意します。</p></li>
+        <li><strong>「ルート」→「スタート地点までナビ」</strong><p>現在地からスタート地点までの道路経路を検索します。この部分はRoutes APIを使うため、APIキーと通信が必要です。</p></li>
+        <li><strong>到着したら「ルート」→「GPXルート走行開始」</strong><p>ここからはGPXの道筋を辿ります。目的地ナビの終了や到着だけでは、GPX案内は自動的に再開しません。</p></li>
+      </ol>
+      <aside class="notice"><p>GPX案内中に別の目的地へのナビを始めると、GPXは消えずに<strong>待機状態</strong>になります。GPXへ戻りたいときも「ルート」→「GPXルート走行開始」を選んでください。</p></aside>
+      <p>「スタート地点までナビ」「ゴール地点までナビ」は「ルート」メニュー内にありますが、どちらも<strong>地点への経路検索</strong>です。「ルート」内にあるからAPIキー不要、というわけではありません。</p>
+    </section>
+    <section id="recording" class="chapter" aria-labelledby="recording-title">
+      <p class="section-label">OPTIONAL</p>
+      <h2 id="recording-title">走行を記録する</h2>
+      <p><strong>道案内と走行記録は別の機能です。</strong>走った軌跡を残したい場合は、メニュー下部の<span class="ui">「記録開始」</span>または<span class="ui">「走行記録も開始」</span>を押してください。案内なしで記録だけ行うこともできます。</p>
+      <p>終了時はメニュー下部の<span class="ui">「セッションを終了」</span>から、画面の確認に従って記録を終了・保存します。案内と記録の両方が動作している場合は、終了する対象を選べます。保存済みの記録は<span class="ui">「走行ログ」</span>で確認・共有できます。</p>
+      <p class="subtle">画面を閉じるだけでは案内や記録の終了になりません。走行を終えたら、アプリ内の終了操作と通知の状態を確認してください。</p>
+    </section>
+    <section id="faq" class="chapter" aria-labelledby="faq-title">
+      <p class="section-label">HELP</p>
+      <h2 id="faq-title">困ったとき</h2>
+      <details><summary>「APIキー: 未登録」と表示されます。GPX案内も使えませんか？</summary><p>GPX案内とGoogle地図の表示には、ご自身のRoutes APIキーは不要です。そのまま「ルート」からGPXを読み込んで使えます。登録が必要なのは目的地への経路検索です。</p></details>
+      <details><summary>地図が表示されません</summary><p>通信状態と「地図」の表示設定を確認してください。Google地図だけ表示できない場合、Routes APIキーの入力では解決しません。「地理院標準」へ切り替えて確認できますが、未保存の地図の取得には通信が必要です。</p></details>
+      <details><summary>目的地ナビを開始できません</summary><p>現在地が取得できているか、インターネットに接続しているか、「地図」でAPIキーを保存したかを確認してください。認証エラーの場合はGoogle Cloud側のRoutes APIの有効化、請求設定、キーの制限を確認します。利用上限に達した場合はGoogle Cloud側の利用状況を確認してください。</p></details>
+      <details><summary>目的地ナビを終えたのに、GPXの案内が始まりません</summary><p>GPX案内への切り替えは手動です。「ルート」→「GPXルート走行開始」を選んでください。読み込んだGPXは待機状態で残っています。</p></details>
+      <details><summary>GPXの線を外れたら、自動で別の道を検索しますか？</summary><p>GPX案内は、元のGPXを辿るためのものです。逸脱時に自動で別の道路経路へ置き換えるものではありません。安全な場所で地図を確認してください。「寄り道モード」と「逸脱地点までナビ」もありますが、後者の経路検索にはRoutes APIキーと通信が必要です。</p></details>
+      <details><summary>音声案内が聞こえません</summary><p>「音声案内」の設定、端末の音量、Bluetoothの接続先・音声出力を確認してください。端末の読み上げ機能の設定によっても音声の出方が変わります。走り始める前に停車中の状態で確認してください。</p></details>
+    </section>
+  </main>
+  <footer>
+    <div class="wrap">
+      <p><a href="/">GPX Compass</a> · <a href="/privacy-policy/">プライバシーポリシー</a> · <a href="#two-ways">「ルート」と「ナビ」の違いへ戻る</a></p>
+      <p>このガイドはアプリの「このアプリについて」→「使い方」からも開けます。</p>
+    </div>
+  </footer>
+</body>
+</html>
