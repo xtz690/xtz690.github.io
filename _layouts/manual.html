@@ -1,0 +1,41 @@
+{%- capture manual_source -%}{% include gpx-compass-manual.md %}{%- endcapture -%}
+{%- capture paragraph_break %}
+
+{% endcapture -%}
+{%- assign paragraphs = manual_source | split: paragraph_break -%}
+{%- assign manual_title = paragraphs[0] | remove_first: '# ' | strip -%}
+{%- assign manual_locale = paragraphs[1] | strip -%}
+{%- assign manual_update = paragraphs[2] | strip -%}
+{%- assign manual_html = paragraphs | shift | shift | shift | join: paragraph_break | markdownify -%}
+{%- assign manual_html = manual_html | replace_first: '<h2>目次</h2>', '<nav class="toc" aria-label="マニュアルの目次"><h2>目次</h2>' | replace_first: '</ul>', '</ul></nav>' -%}
+{%- assign manual_html = manual_html | replace: '<table>', '<p class="table-hint">この表は左右にスクロールできます。</p><div class="table-wrap" tabindex="0" role="region" aria-label="説明表"><table>' | replace: '</table>', '</table></div>' | replace: '<th>', '<th scope="col">' -%}
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="GPX CompassのAndroid・iOS共通操作マニュアル。HUD、地図の線とマーカー、全メニューの操作方法とOS差分を説明します。">
+  <meta name="theme-color" content="#163b4b">
+  <link rel="canonical" href="https://xtz690.github.io/gpx-compass/manual/">
+  <title>操作マニュアル（Android・iOS共通） | GPX Compass</title>
+  <link rel="stylesheet" href="{{ "/assets/css/manual.css" | relative_url }}">
+</head>
+<body>
+  <a class="skip" href="#main">本文へ移動</a>
+  <nav class="wrap brand" aria-label="サイト内の案内"><a href="/">GPX Compass</a><a href="/gpx-compass/">クイックスタート</a><a href="/privacy-policy/">プライバシーポリシー</a></nav>
+  <header><div class="wrap">
+    <p class="eyebrow">ANDROID · iOS · USER MANUAL</p>
+    <h1>{{ manual_title | escape }}</h1>
+    <p>画面の読み方から、ルート・記録・共有・設定まで。</p>
+    <p class="meta">{{ manual_locale | escape }} · {{ manual_update | escape }}</p>
+  </div></header>
+  <main id="main" class="wrap">
+    <div class="tools"><a href="USER_MANUAL.md" download>Markdown原本をダウンロード</a><a href="/gpx-compass/">クイックスタートガイド</a></div>
+    <p class="table-hint">幅の広い表は、左右にスクロールして読めます。</p>
+    <article aria-label="操作マニュアル本文">
+{{ manual_html }}
+    </article>
+  </main>
+  <footer><div class="wrap"><p><a href="/gpx-compass/">クイックスタート</a> · <a href="USER_MANUAL.md" download>Markdown原本</a> · <a href="#main">先頭へ戻る</a></p><p>アプリの「このアプリについて」から開けます。専用リンクがない版では「使い方」から、このサイトのマニュアルリンクへ進んでください。</p></div></footer>
+</body>
+</html>

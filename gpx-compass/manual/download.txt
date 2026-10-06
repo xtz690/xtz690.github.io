@@ -1,0 +1,5 @@
+---
+layout: null
+permalink: /gpx-compass/manual/USER_MANUAL.md
+---
+{%- include gpx-compass-manual.md -%}

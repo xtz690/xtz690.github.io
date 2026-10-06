@@ -1,0 +1,6 @@
+_includes/** text eol=lf
+_layouts/** text eol=lf
+_config.yml text eol=lf
+gpx-compass/manual/index.html text eol=lf
+gpx-compass/manual/download.txt text eol=lf
+assets/css/manual.css text eol=lf

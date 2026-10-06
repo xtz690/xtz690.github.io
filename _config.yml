@@ -1,0 +1,13 @@
+title: GPX Compass
+url: https://xtz690.github.io
+baseurl: ""
+markdown: kramdown
+kramdown:
+  input: GFM
+  auto_ids: false
+  hard_wrap: false
+exclude:
+  - README.md
+  - gpx-compass/manual/README.md
+  - Gemfile
+  - Gemfile.lock
