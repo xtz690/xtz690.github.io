@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="GPX Compassの始め方。「ルート」でGPXを辿る方法と、「ナビ」でGoogle Routes APIを使って目的地へ向かう方法を分けて紹介します。">
+  <meta name="description" content="GPX CompassのAndroid・iOS共通クイックスタート。GPXの読込と案内、オフライン準備、目的地ナビ、走行記録、グループライドの始め方を説明します。">
   <meta name="theme-color" content="#163b4b">
   <link rel="canonical" href="https://xtz690.github.io/gpx-compass/">
   <title>クイックスタートガイド | GPX Compass</title>
@@ -89,11 +89,11 @@
   <div class="wrap brand"><a href="/">GPX Compass</a></div>
   <header>
     <div class="wrap">
-      <p class="eyebrow">ANDROID · QUICK START</p>
+      <p class="eyebrow">ANDROID · iOS · QUICK START</p>
       <h1>走りたい道を、迷わず辿る。</h1>
-      <p>GPX Compass クイックスタートガイド</p>
-      <p>GPX Compassは、あらかじめ用意したGPXルートを辿るためのナビゲーション補助アプリです。もう一つの使い方として、Google Routes APIで任意の目的地への経路を検索し、案内する機能も備えています。</p>
-      <p class="meta">Android版 0.97.1 系の日本語画面を基準に説明しています。iOS版との違いや詳しい操作は共通マニュアルを参照してください。更新日: 2026年10月7日</p>
+      <p>GPX Compass クイックスタートガイド — Android・iOS共通</p>
+      <p>GPX Compassは、あらかじめ用意したGPXルートを辿るためのナビゲーション補助アプリです。任意の目的地までの道路ナビ、走行記録、仲間との位置共有も使えます。AndroidとiPhoneのどちらでも、ここから始められます。</p>
+      <p class="meta">0.97.1系の日本語画面を基準に、両OS共通の操作と主な違いを説明します。ボタン名や利用できる機能は版によって異なる場合があります。更新日: 2026年10月8日</p>
     </div>
   </header>
   <main id="main" class="wrap">
@@ -117,17 +117,17 @@
           <span class="tag">もう一つの使い方 · 「ナビ」メニュー</span>
           <h3>選んだ目的地へ向かう</h3>
           <p class="concept">行き先を選ぶ → そこまでの道を検索</p>
-          <p>宿泊先や立ち寄り先など、行き先だけが決まっているときに使います。Google Routes APIが検索した道路経路を案内します。</p>
+          <p>宿泊先や立ち寄り先など、行き先だけが決まっているときに使います。AndroidはGoogle、iOSはAppleが検索した道路経路を案内します。</p>
           <dl>
             <dt>用意するもの</dt><dd>行き先・インターネット接続</dd>
-            <dt>自分のRoutes APIキー</dt><dd><strong>必要</strong>（初回設定あり）</dd>
-            <dt>道順を決めるのは</dt><dd>Google Routes API（GPXは不要）</dd>
+            <dt>自分のRoutes APIキー</dt><dd><strong>Androidは必要／iOSは不要</strong></dd>
+            <dt>道順を決めるのは</dt><dd>Android: Google Routes API<br>iOS: Appleの経路検索（MapKit）<br>どちらもGPXは不要</dd>
           </dl>
           <a href="#navigation">目的地ナビの手順へ →</a>
         </article>
       </div>
       <aside class="notice">
-        <p><strong>GPXを辿るだけなら、APIキーの設定は不要です。</strong><br>Googleの地図を表示するためにも、ご自身のRoutes APIキーは必要ありません。地図を表示する機能と、目的地までの道を検索する機能は別です。</p>
+        <p><strong>GPXを辿るだけなら、両OSともAPIキーの設定は不要です。</strong><br>通常の地図表示にも、ご自身のRoutes APIキーは必要ありません。キーが必要なのはAndroidの目的地ナビです。iOSにはこのキーの入力画面はありません。</p>
       </aside>
       <aside class="notice">
         <p><a href="/gpx-compass/manual/"><strong>Android・iOS共通の操作マニュアル</strong></a><br>HUD、地図の線やマーカー、全メニューの詳しい使い方とOSごとの差分を説明しています。Markdown原本もダウンロードできます。</p>
@@ -138,9 +138,11 @@
       <ul>
         <li><a href="#before">初回の準備</a></li>
         <li><a href="#gpx">GPXを辿る</a></li>
+        <li><a href="#map">地図画面を読む</a></li>
         <li><a href="#navigation">目的地へナビ</a></li>
         <li><a href="#switching">二つの使い分け</a></li>
         <li><a href="#recording">走行を記録する</a></li>
+        <li><a href="#group">仲間と位置を共有する</a></li>
         <li><a href="#faq">困ったとき</a></li>
       </ul>
     </nav>
@@ -148,40 +150,69 @@
       <p class="section-label">BEFORE YOU RIDE</p>
       <h2 id="before-title">初回の準備</h2>
       <ol>
-        <li>端末の位置情報をONにし、アプリから求められたら位置情報の利用を許可します。<strong>正確な位置情報</strong>を有効にしてください。</li>
-        <li>通知の許可を求められたら、案内・記録の動作状態を確認できるよう許可してください。</li>
+        <li>端末の位置情報をONにし、アプリから求められたら位置情報の利用を許可します。<strong>正確な位置情報</strong>を有効にしてください。iOSでは、まずアプリ使用中の許可で現在地を確認できます。</li>
+        <li>通知の許可を求められたら許可します。Androidでは走行中の通知で案内・記録の状態を確認できます。iOSではオフライン準備の結果などを通知します。</li>
         <li>屋外などGPSを受信しやすい場所で、地図上に現在地が表示されることを確かめます。</li>
         <li>音声を使う場合は、メニューの<span class="ui">「音声案内」</span>で設定し、端末の音量とBluetooth機器への出力を確認します。</li>
       </ol>
       <p class="subtle">以下の手順は、地図画面のメニューボタンから始めます。Bluetoothセンサーなどの外部機器は、使い始めるための必須条件ではありません。</p>
+      <details>
+        <summary>画面を消したり、別のアプリを開いたりして使う場合</summary>
+        <p>iOSでは案内・記録・位置共有を始める際に、背景位置情報の許可を求めることがあります。画面消灯中も位置を更新するには、iPhoneの設定でGPX Compassの位置情報を「常に」にしてください。</p>
+        <p>Androidでは走行通知と位置情報の許可を確認します。背景で止まる場合は、端末の省電力・電池の制限も確認してください。オフライン準備は完了までアプリを前面にして、結果を確認します。</p>
+      </details>
       <aside class="notice caution"><p>設定や目的地選択は、安全な場所に停車して行ってください。案内は補助情報です。実際の標識、通行規制、路面状況を優先してください。</p></aside>
     </section>
     <section id="gpx" class="chapter" aria-labelledby="gpx-title">
       <p class="section-label">01 · 「ルート」メニュー</p>
       <h2 id="gpx-title">GPXルートを辿る</h2>
-      <p>あらかじめルート作成サービスなどからGPXファイルを入手し、端末から選べる場所に保存しておきます。</p>
+      <p>あらかじめルート作成サービスなどからGPXファイルを入手し、端末から選べる場所に保存しておきます。iPhoneでは「ファイル」アプリで扱える場所（このiPhone内・iCloud Driveなど）を使えます。</p>
       <ol class="steps">
         <li><strong>「ルート」→「ルート読込」でファイルを選ぶ</strong><p>読み込み後、保存したルートの詳細で全体のプレビューを確認できます。コースと進む向きを確認してください。逆向きに走りたい場合は詳細の「ルート反転」を使います。</p></li>
         <li><strong>出発前にオフライン準備を行う</strong><p>ルート詳細の「オフライン準備開始」から、ルート周辺の地理院地図などを準備します。読込や詳細の閲覧だけでは取得を開始しません。ルート走行開始時にも準備しますが、圏外へ出る予定なら通信できる場所で事前に完了を確認してください。</p></li>
         <li><strong>「ルート走行開始」を押す</strong><p>ルート詳細から開始します。地図などに「GPXルート走行開始」と表示される場合もあります。走行中に別のルートを閲覧しても、開始・切替を確定するまでは現在の案内を維持します。</p></li>
         <li><strong>地図のGPX線・進捗・ターン案内を確認して走る</strong><p>GPXの道筋を辿る機能であり、目的地への最適経路を検索する機能ではありません。曲がり角の案内だけに頼らず、地図上の線も確認してください。</p></li>
       </ol>
-      <p>GPXファイルを他のアプリからGPX Compassへ共有して読み込むこともできます。</p>
+      <p>GPXファイルを他のアプリからGPX Compassへ共有して読み込むこともできます。<strong>iOSでは共有シートでGPX Compassを選んだ後、本体アプリを開いて取り込みます。</strong>受信しただけでは案内を開始しません。</p>
+      <p>保存したGPXは「ルート」のライブラリから再び選べます。詳細を開くだけでは、現在の案内・記録を切り替えません。QRによる共有・受信は利用できる版に条件があるため、<a href="/gpx-compass/manual/#route-menu">操作マニュアルのルート共有</a>を参照してください。</p>
       <aside class="notice">
-        <p><strong>「ゴール地点までナビ」は、GPXを辿る開始ボタンではありません。</strong><br>これは現在地からGPXのゴール地点への道路経路を別に検索する機能です。GPXどおりに走るには「GPXルート走行開始」を選びます。</p>
+        <p><strong>「ゴール地点までナビ」は、GPXを辿る開始ボタンではありません。</strong><br>これは現在地からGPXのゴール地点への道路経路を別に検索する機能です。GPXどおりに走るには、詳細の「ルート走行開始」（画面によって「GPXルート走行開始」）を選びます。</p>
       </aside>
       <details>
         <summary>圏外で使うときの注意</summary>
-        <p>GPX案内にはご自身のAPIキーは不要ですが、地図の取得には通信が必要です。保存済みの地理院地図は圏外でも使えます。「地図」で「地理院標準」を選ぶと表示を確認できます。「自動」では圏外時に地理院地図へ切り替わります。</p>
-        <p>保存されるのは読み込んだルートの周辺であり、全国の地図ではありません。未取得の範囲は表示できません。また、Google地図のオフライン保存機能ではなく、目的地ナビの経路検索もオフラインでは利用できません。</p>
+        <p>GPX案内にはご自身のAPIキーは不要ですが、地図の取得には通信が必要です。保存済みの地理院地図は圏外でも使えます。「地図」で「地理院標準」を選ぶと表示を確認できます。「自動」では通常、AndroidはGoogle地図、iOSはApple地図を使い、圏外時は保存済みの地理院地図へ切り替わります。</p>
+        <p>保存されるのはルート周辺の地理院地図であり、全国の地図やGoogle・Apple地図全体ではありません。未取得の範囲は表示できません。両OSとも目的地ナビの経路検索には通信が必要です。</p>
       </details>
+    </section>
+    <section id="map" class="chapter" aria-labelledby="map-title">
+      <p class="section-label">READ THE MAP</p>
+      <h2 id="map-title">地図画面を読む・操作する</h2>
+      <ul>
+        <li><strong>上部のHUD：</strong>速度、時計、経過時間、ルートの進捗、次のターンなどを確認します。GPX上の進捗と、実際に走った距離は別の数字です。</li>
+        <li><strong>青い線：</strong>読み込んだGPXの道筋です。太い灰色の線は走行済みと判定されたGPX区間、細い灰色の線は実際に走った軌跡です。</li>
+        <li><strong>赤い破線：</strong>GPXから外れた場所で走った軌跡です。緑の点線は復帰方向の目安であり、通れる道路を示す線ではありません。</li>
+        <li><strong>目的地への道路経路：</strong>Androidでは緑、iOSでは橙色です。青いGPX線とは区別して確認します。</li>
+        <li><strong>青い操作バー：</strong>メニュー、地図の向き、現在地追従、縮小・拡大を操作します。横画面では左右にHUDと操作バーを配置します。</li>
+      </ul>
+      <p>指でドラッグして移動、ピンチして拡大・縮小できます。現在地追従がONなら、地図を動かして指を離してから約5秒後に現在地へ戻ります。別の場所を見続ける場合は現在地追従をOFFにします。</p>
+      <p>「表示」メニューでは画面の向き、省電力、ターン・標高の表示や、距離リングなどを選べます。設定した表示は、次回起動時にも使われます。</p>
+      <details>
+        <summary>雨や手袋による誤操作を防ぎたい</summary>
+        <p>HUDの先頭2段を約2秒長押しすると、タッチ操作をロックします。解除するときは同じ領域を5秒以内に10回短くタップします。操作バーが隠れても、案内・記録とHUD表示は続きます。</p>
+      </details>
+      <p><a href="/gpx-compass/manual/#map-symbols">線・矢印・マーカーの詳しい凡例</a> · <a href="/gpx-compass/manual/#hud">HUDの全項目</a></p>
     </section>
     <section id="navigation" class="chapter" aria-labelledby="navigation-title">
       <p class="section-label">02 · 「ナビ」メニュー</p>
       <h2 id="navigation-title">任意の目的地へナビゲーションする</h2>
-      <p>GPXを読み込まなくても使える、もう一つの機能です。現在地から選んだ目的地までの経路を<strong>Google Routes API</strong>で検索します。インターネット接続と、ご自身で用意したRoutes APIキーが必要です。</p>
-      <details open>
-        <summary>初回だけ：Routes APIキーを設定する</summary>
+      <p>GPXを読み込まなくても使える機能です。現在地から選んだ目的地までの道路経路を検索します。<strong>両OSとも現在地とインターネット接続が必要です。</strong>道路の選択や案内文はOSによって異なります。</p>
+      <ul>
+        <li><strong>Android：</strong>Google Routes APIを使います。初回に自分のAPIキーを設定し、「地図」の「移動モード」で自動車・自転車を選びます。Google地図を利用できる状態が必要です。</li>
+        <li><strong>iOS：</strong>Appleの経路検索（MapKit）を使います。APIキーの準備・入力は不要です。「地図」の「移動方法」で自動車・自転車を選びます。</li>
+      </ul>
+      <p><a href="/gpx-compass/manual/#navigation-menu">目的地ナビの詳しい操作</a></p>
+      <details>
+        <summary>Androidの初回設定：Routes APIキーを登録する</summary>
         <ol>
           <li>Google Cloudでプロジェクトと請求先を設定し、Routes APIを有効にしてAPIキーを作成します。手順は<a href="https://developers.google.com/maps/documentation/routes/get-api-key?hl=ja">Google公式のRoutes APIセットアップガイド</a>を参照してください。</li>
           <li>キーには利用制限を設定してください。APIの制限はRoutes APIを対象とし、Androidアプリの制限に必要なパッケージ名とSHA-1は、次のアプリ内設定画面で確認できます。</li>
@@ -199,9 +230,9 @@
       </ol>
       <p>一度使った行き先は「最近の目的地」から選べます。「お気に入り」も利用できます。</p>
       <details>
-        <summary>Googleマップで探した場所へ向かう</summary>
-        <p>Googleマップアプリで場所を選び、「共有」の送信先にGPX Compassを選ぶ方法もあります。共有内容を目的地として認識できると、GPX Compassで経路検索が始まります。APIキーを先に設定し、停車中に操作してください。</p>
-        <p>GPX Compassの「ナビ」メニュー自体に、住所や施設名を入力する検索欄はありません。地図上で選ぶか、Googleマップなどから場所を共有してください。</p>
+        <summary>地図アプリで探した場所へ向かう</summary>
+        <p>AndroidではGoogleマップ、iOSではAppleの「マップ」で場所を選び、共有先にGPX Compassを選べます。iOSでは共有後に本体アプリを開いて受信します。対応する地点情報を読み取れた場合に経路検索します。AndroidではAPIキーを先に設定してください。</p>
+        <p>GPX Compassの「ナビ」メニュー自体に、住所や施設名を入力する検索欄はありません。地図上で選ぶか、地図アプリから場所を共有してください。共有する地点の確認は停車中に行います。</p>
       </details>
     </section>
     <section id="switching" class="chapter" aria-labelledby="switching-title">
@@ -210,28 +241,47 @@
       <h3>例：GPXのスタート地点まで行ってから、コースを走る</h3>
       <ol class="steps">
         <li><strong>GPXを読み込む</strong><p>「ルート」→「ルート読込」でコースを用意します。</p></li>
-        <li><strong>ルート詳細の「スタート地点までナビ」</strong><p>現在地からスタート地点までの道路経路を検索します。この部分はAndroidではRoutes APIを使うため、APIキーと通信が必要です。</p></li>
+        <li><strong>ルート詳細の「スタート地点までナビ」</strong><p>現在地からスタート地点までの道路経路を検索します。両OSとも通信が必要です。AndroidはRoutes APIキーも必要で、iOSはAppleの経路検索を使います。</p></li>
         <li><strong>到着したらルート詳細の「ルート走行開始」</strong><p>ここからはGPXの道筋を辿ります。目的地ナビの終了や到着だけでは、GPX案内は自動的に再開しません。</p></li>
       </ol>
       <aside class="notice"><p>GPX案内中に別の目的地へのナビを始めると、GPXは消えずに<strong>待機状態</strong>になります。GPXへ戻りたいときもライブラリで元のルートを選び、詳細の「ルート走行開始」を選んでください。</p></aside>
-      <p>「スタート地点までナビ」「ゴール地点までナビ」は「ルート」メニュー内にありますが、どちらも<strong>地点への経路検索</strong>です。「ルート」内にあるからAPIキー不要、というわけではありません。</p>
+      <p>「スタート地点までナビ」「ゴール地点までナビ」は「ルート」メニュー内にありますが、どちらも<strong>地点への経路検索</strong>です。Androidでは、通常の目的地ナビと同じAPIキー設定が必要です。</p>
     </section>
     <section id="recording" class="chapter" aria-labelledby="recording-title">
-      <p class="section-label">OPTIONAL</p>
-      <h2 id="recording-title">走行を記録する</h2>
-      <p><strong>道案内と走行記録は別の機能です。</strong>走った軌跡を残したい場合は、メニュー下部の<span class="ui">「記録開始」</span>または<span class="ui">「走行記録も開始」</span>を押してください。案内なしで記録だけ行うこともできます。</p>
-      <p>終了時はメニュー下部の<span class="ui">四角い停止アイコン（「セッションを終了」）</span>を押し、画面の確認に従って記録を終了・保存します。案内と記録の両方が動作している場合は、終了する対象を選べます。保存済みの記録は<span class="ui">「走行ログ」</span>で確認・共有できます。</p>
-      <p class="subtle">画面を閉じるだけでは案内や記録の終了になりません。走行を終えたら、アプリ内の終了操作と通知の状態を確認してください。</p>
+      <p class="section-label">RECORD YOUR RIDE</p>
+      <h2 id="recording-title">走行を記録する・保存する</h2>
+      <p><strong>道案内と走行記録は別の機能です。</strong>GPX案内や目的地ナビを始めても、保存用の記録は自動で始まりません。</p>
+      <ol class="steps">
+        <li><strong>メインメニュー下部で記録を開始する</strong><p>案内中なら「走行記録も開始」を押します。案内を使わない場合は「記録開始」（iOSでは「走行記録開始」）で、自由に走った軌跡を記録できます。</p></li>
+        <li><strong>休憩中は必要に応じて一時停止する</strong><p>一時停止ボタンで案内と記録の積算を止め、再開ボタンで続けます。現在地の表示と地図操作は一時停止中も使えます。</p></li>
+        <li><strong>走行を終えたら終了して「保存」する</strong><p>メインメニュー下部の四角い停止アイコン（「セッションを終了」）を押します。案内と記録を併用中は終了する対象を選び、記録の結果・走行名を確認して「保存」を押します。</p></li>
+        <li><strong>「走行ログ」で振り返る・GPXを共有する</strong><p>保存したログを選ぶと、距離・時間などの結果と地図を確認できます。GPX共有の操作から、他のアプリへ記録を渡せます。</p></li>
+      </ol>
+      <p class="subtle">画面を閉じるだけでは案内・記録の終了になりません。記録されるのは記録開始後の軌跡です。走行を終えたらアプリ内の状態を確認し、Androidでは走行通知も確認してください。</p>
+      <p><a href="/gpx-compass/manual/#ride-log">走行ログの詳しい操作</a></p>
+    </section>
+    <section id="group" class="chapter" aria-labelledby="group-title">
+      <p class="section-label">RIDE TOGETHER</p>
+      <h2 id="group-title">仲間と現在位置を共有する</h2>
+      <p>グループライドは任意の機能です。GPX案内や走行記録を始めるために、グループへの参加は必要ありません。使う場合は通信と位置情報の許可が必要です。</p>
+      <ol class="steps">
+        <li><strong>「グループライド」で表示名を入力する</strong><p>仲間に見せる名前と、画面の位置共有の説明を確認します。</p></li>
+        <li><strong>グループを作成するか、招待から参加する</strong><p>主催者は「グループを作成」、参加者は招待リンク・コードから参加します。共有に同意する場合に、画面の「位置を共有して作成／参加」を押します。</p></li>
+        <li><strong>地図やメンバー一覧で仲間を確認する</strong><p>通信状態によって、仲間の位置更新が遅れる場合があります。位置共有を止めたいときは「グループライド」で共有を一時停止するか、グループから退出します。</p></li>
+      </ol>
+      <aside class="notice"><p><strong>案内や記録を終了しても、グループの位置共有は続きます。</strong><br>メインメニューの一時停止・終了とは別に、位置共有の停止を確認してください。</p></aside>
+      <p><a href="/gpx-compass/manual/#group-ride">招待・メンバー・グループのGPXなど、詳しい操作</a></p>
     </section>
     <section id="faq" class="chapter" aria-labelledby="faq-title">
       <p class="section-label">HELP</p>
       <h2 id="faq-title">困ったとき</h2>
-      <details><summary>「APIキー: 未登録」と表示されます。GPX案内も使えませんか？</summary><p>GPX案内とGoogle地図の表示には、ご自身のRoutes APIキーは不要です。そのまま「ルート」からGPXを読み込んで使えます。登録が必要なのは目的地への経路検索です。</p></details>
-      <details><summary>地図が表示されません</summary><p>通信状態と「地図」の表示設定を確認してください。Google地図だけ表示できない場合、Routes APIキーの入力では解決しません。「地理院標準」へ切り替えて確認できますが、未保存の地図の取得には通信が必要です。</p></details>
-      <details><summary>目的地ナビを開始できません</summary><p>現在地が取得できているか、インターネットに接続しているか、「地図」でAPIキーを保存したかを確認してください。認証エラーの場合はGoogle Cloud側のRoutes APIの有効化、請求設定、キーの制限を確認します。利用上限に達した場合はGoogle Cloud側の利用状況を確認してください。</p></details>
-      <details><summary>目的地ナビを終えたのに、GPXの案内が始まりません</summary><p>GPX案内への切り替えは手動です。「ルート」→「GPXルート走行開始」を選んでください。読み込んだGPXは待機状態で残っています。</p></details>
-      <details><summary>GPXの線を外れたら、自動で別の道を検索しますか？</summary><p>GPX案内は、元のGPXを辿るためのものです。逸脱時に自動で別の道路経路へ置き換えるものではありません。安全な場所で地図を確認してください。「寄り道モード」と「逸脱地点までナビ」もありますが、後者の経路検索にはRoutes APIキーと通信が必要です。</p></details>
+      <details><summary>「APIキー: 未登録」と表示されます。GPX案内も使えませんか？</summary><p>これはAndroidの目的地ナビ用の設定です。両OSとも、GPX案内と通常の地図表示にはご自身のRoutes APIキーは不要です。「ルート」からGPXを読み込んで使えます。iOSでは目的地ナビにもキーは不要です。</p></details>
+      <details><summary>地図が表示されません</summary><p>通信状態と「地図」の表示設定を確認してください。AndroidのGoogle地図、iOSのApple地図を表示できない場合、Routes APIキーの入力では解決しません。「地理院標準」へ切り替えて確認できますが、未保存の地図の取得には通信が必要です。</p></details>
+      <details><summary>目的地ナビを開始できません</summary><p>両OSとも、現在地とインターネット接続を確認してください。Androidでは「地図」でAPIキーを保存したか、Google地図を利用できるかも確認します。認証エラーや利用上限の場合はGoogle Cloud側のRoutes API・請求設定・キー制限・利用状況を確認します。iOSはAppleの経路検索を使うため、Googleの設定は不要です。経路が見つからない場合は移動方法・目的地を見直してください。</p></details>
+      <details><summary>目的地ナビを終えたのに、GPXの案内が始まりません</summary><p>GPX案内への切り替えは手動です。「ルート」で元のGPXを選び、詳細の「ルート走行開始」を押してください。目的地への到着や中止だけでは、自動でGPX案内へ戻りません。</p></details>
+      <details><summary>GPXの線を外れたら、自動で別の道を検索しますか？</summary><p>GPX案内は元のGPXを辿るためのものです。通常の逸脱では、GPXを別の道路経路へ自動で置き換えません。意図的に離れるときは「寄り道モード」（iOSでは「迂回モード」）を使えます。戻るための道路ナビは「逸脱地点までナビ」（iOSでは「離脱地点へ戻る」）です。通信が必要で、AndroidはRoutes APIキーも必要です。安全な場所で操作してください。</p></details>
       <details><summary>音声案内が聞こえません</summary><p>「音声案内」の設定、端末の音量、Bluetoothの接続先・音声出力を確認してください。端末の読み上げ機能の設定によっても音声の出方が変わります。走り始める前に停車中の状態で確認してください。</p></details>
+      <details><summary>AndroidとiOSで、同じ機能・ボタンがありません</summary><p>一部の機能はOSやアプリの版で異なります。たとえば登坂フォーカスは現在Androidのみです。単独QRルート共有も利用できる版に条件があります。表示の凡例や詳しい対応状況は<a href="/gpx-compass/manual/#platform-differences">操作マニュアルのOS差</a>を参照してください。</p></details>
     </section>
   </main>
   <footer>
